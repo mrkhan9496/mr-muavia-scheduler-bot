@@ -48,6 +48,7 @@ async function handleCommand(cmd, args, from, msg, isAdmin) {
         case 'settimes': return channelCmds.settimesCmd(sock, from, msg, args);
         case 'postnow': return channelCmds.postnowCmd(sock, from, msg);
         case 'setchannel': return channelCmds.setchannelCmd(sock, from, msg, args);
+        case 'findchannel': return channelCmds.findchannelCmd(sock, from, msg, args);
         case 'chatbot': return chatbotCmds.chatbotCmd(sock, from, msg, args);
         default: return null; // unknown
     }
@@ -75,7 +76,7 @@ async function onMessage(m) {
             const [raw, ...args] = text.slice(1).trim().split(/\s+/);
             const cmd = raw.toLowerCase();
             // admin-only commands
-            const adminOnly = ['schedule', 'schedules', 'cancel', 'cancelall', 'autopost', 'settimes', 'postnow', 'setchannel', 'chatbot'];
+            const adminOnly = ['schedule', 'schedules', 'cancel', 'cancelall', 'autopost', 'settimes', 'postnow', 'setchannel', 'findchannel', 'chatbot'];
             if (adminOnly.includes(cmd) && !admin) {
                 await sock.sendMessage(from, { text: '❌ Owner only.' }, { quoted: msg });
                 return;
