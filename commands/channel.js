@@ -76,4 +76,41 @@ async function setchannelCmd(sock, from, msg, args) {
     await sock.sendMessage(from, { text: '✅ Channel configured.' }, { quoted: msg });
 }
 
-module.exports = { channelStatusCmd, autopostCmd, settimesCmd, postnowCmd, setchannelCmd };
+/**
+ * .findchannel <invite link or code>
+ * Resolves a WhatsApp channel invite to its JID and saves it automatically.
+ * Example: .findchannel https://whatsapp.com/channel/0029VbAYFuA7z4kXHVNHfM1Y
+ */
+async function findchannelCmd(sock, from, msg, args) {
+    const raw = (args[0] || '').trim();
+    if (!raw) {
+        return sock.sendMessage(from, { text:
+            '❌ Usage: .findchannel <channel link>\n\n' +
+            'Apne channel ka invite link bhejo:\n' +
+            'WhatsApp → channel kholo → Share → Copy link\n\n' +
+            'Example:\n.findchannel https://whatsapp.com/channel/0029VbAYFuA7z4kXHVNHfM1Y'
+        }, { quoted: msg });
+    }
+    // extract invite code from link or bare code
+    const m = raw.match(/channel\/([A-Za-z0-9]+)/);
+    const code = m ? m[1] : raw.replace(/[^A-Za-z0-9]/g, '');
+    if (!code) return sock.sendMessage(from, { text: '❌ Invite code samajh nahi aya.' }, { quoted: msg });
+
+    await sock.sendMessage(from, { text: '🔍 Channel dhoond raha hun...' }, { quoted: msg });
+    try {
+        const meta = await sock.newsletterMetadata('invite', code);
+        const jid = meta?.id || meta?.result?.id;
+        const name = meta?.thread_metadata?.name?.text || meta?.name || '';
+        if (!jid) throw new Error('JID nahi mili');
+        await db.setSetting('channel_jid', jid);
+        await sock.sendMessage(from, { text:
+            `✅ Channel mil gaya${name ? ': *' + name + '*' : ''}!\n\n` +
+            `🆔 JID: ${jid}\n\n` +
+            `✅ Auto-save ho gayi — ab .channelstatus bhejo.`
+        }, { quoted: msg });
+    } catch (e) {
+        await sock.sendMessage(from, { text: '❌ Channel nahi mili: ' + e.message + '\nLink sahi copy kar ke dobara bhejo.' }, { quoted: msg });
+    }
+}
+
+module.exports = { channelStatusCmd, autopostCmd, settimesCmd, postnowCmd, setchannelCmd, findchannelCmd };
