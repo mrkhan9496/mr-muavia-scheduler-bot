@@ -23,6 +23,7 @@ const aiChat = require('./lib/aiChat');
 const scheduleCmds = require('./commands/schedule');
 const channelCmds = require('./commands/channel');
 const chatbotCmds = require('./commands/chatbot');
+const geminiCmds = require('./commands/gemini');
 const menuCmds = require('./commands/menu');
 
 const OWNER = (process.env.OWNER_NUMBER || '').replace(/[^0-9]/g, '');
@@ -50,6 +51,7 @@ async function handleCommand(cmd, args, from, msg, isAdmin) {
         case 'setchannel': return channelCmds.setchannelCmd(sock, from, msg, args);
         case 'findchannel': return channelCmds.findchannelCmd(sock, from, msg, args);
         case 'chatbot': return chatbotCmds.chatbotCmd(sock, from, msg, args);
+        case 'gemini': return geminiCmds.geminiCmd(sock, from, msg, args);
         default: return null; // unknown
     }
 }
