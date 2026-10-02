@@ -18,6 +18,7 @@ async function menuCmd(sock, from, msg) {
 ┃ ✦ .settimes 10:00,13:00,...
 ┃ ✦ .postnow
 ┃ ✦ .setchannel <jid>
+┃ ✦ .findchannel <link>
 ┃
 ╭━━━〔 ⚡ *CHATBOT* 〕━━━┈⊷
 ┃ ✦ .chatbot on/off/status
