@@ -1,4 +1,4 @@
-# MR MUAVIA SCHEDULER BOT (Personal)
+# MUAVIA MINI BOT (Personal)
 
 Personal WhatsApp bot: **message scheduler**, **WhatsApp Channel auto-posting** (Gemini AI images), **AI chatbot**. Separate project — does not touch MR MUAVIA MD BOT.
 
@@ -12,8 +12,8 @@ Personal WhatsApp bot: **message scheduler**, **WhatsApp Channel auto-posting** 
 
 ```bash
 pkg install nodejs git -y
-git clone https://github.com/mrkhan9496/mr-muavia-scheduler-bot
-cd mr-muavia-scheduler-bot
+git clone https://github.com/mrkhan9496/muavia-mini-bot
+cd muavia-mini-bot
 npm install
 cp .env.example .env
 ```
