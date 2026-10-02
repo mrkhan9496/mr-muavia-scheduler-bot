@@ -22,6 +22,7 @@ async function menuCmd(sock, from, msg) {
 ┃
 ╭━━━〔 ⚡ *CHATBOT* 〕━━━┈⊷
 ┃ ✦ .chatbot on/off/status
+┃ ✦ .gemini (sawal)
 ┃
 ╰━━━━━━━━━━━━━━━━━━━━┈⊷
 > *© PERSONAL BOT — MUAVIA*` }, { quoted: msg });
